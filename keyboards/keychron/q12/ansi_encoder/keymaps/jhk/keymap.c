@@ -16,6 +16,7 @@
 
 #include "caps_word.h"
 #include "config.h"
+#include "host.h"
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
 
@@ -115,7 +116,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 static bool caps_word_is_on = false;
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    if (host_keyboard_led_state().caps_lock) {
+    led_t led_state = host_keyboard_led_state();
+    if (led_state.caps_lock) {
         SET_WHITE(LSHIFT_LED_INDEX);
         SET_WHITE(RSHIFT_LED_INDEX);
     } else {
@@ -125,7 +127,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         }
     }
 
-    if (host_keyboard_led_state().num_lock) {
+    if (led_state.num_lock) {
         SET_WHITE(NUM_LOCK_LED_INDEX);
     } else {
         if (!rgb_matrix_get_flags()) {
@@ -135,9 +137,15 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
     if (caps_word_is_on) {
         SET_WHITE(SPACE_LED_INDEX);
+        SET_WHITE(LSHIFT_LED_INDEX);
+        SET_WHITE(RSHIFT_LED_INDEX);
     } else {
         if (!rgb_matrix_get_flags()) {
             SET_BLACK(SPACE_LED_INDEX);
+            if (!led_state.caps_lock) {
+                SET_BLACK(LSHIFT_LED_INDEX);
+                SET_BLACK(RSHIFT_LED_INDEX);
+            }
         }
     }
 
