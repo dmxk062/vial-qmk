@@ -14,6 +14,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "action.h"
+#include "action_util.h"
+#include "keycodes.h"
+#include "keymap_us.h"
+#include "modifiers.h"
 #include "quantum_keycodes.h"
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
@@ -42,15 +47,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*    4           5           6                          caps      A         S         D         F         G         H         J         K          L        ;         '                     󰌑                   home  */
         KC_P4,      KC_P5,      KC_P6,               LCTL_T(KC_ESC), KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,      KC_L,    KC_SCLN,  KC_QUOT,              KC_ENT,             KC_HOME,
     /*    1           2           3                          lshift              Z         X         C         V         B         N         M          ,        .          /                    rshift       󰅃            */
-        KC_P1,      KC_P2,      KC_P3,        KC_PENT,     SC_LSPO,            KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,      KC_COMM, KC_DOT,   KC_SLSH,              SC_RSPC,     KC_UP,
+        KC_P1,      KC_P2,      KC_P3,        KC_PENT,   LSFT_T(KC_BSPC),      KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,      KC_COMM, KC_DOT,   KC_SLSH,            RSFT_T(KC_DEL),KC_UP,
     /*    0                       .                        lctrl     lgui      lalt                                    space                                   ralt         fn         rctrl        󰅁         󰅀         󰅂   */
-        KC_P0,                  KC_PDOT,                 KC_LCTL,  KC_LWIN,  LALT_T(KC_BSPC),                        KC_SPC,                                 KC_RALT,  MO(LAYER_1),  KC_RCTL,     KC_LEFT,  KC_DOWN,  KC_RGHT
+        KC_P0,                  KC_PDOT,                 KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  MO(LAYER_1),  KC_RCTL,     KC_LEFT,  KC_DOWN,  KC_RGHT
     ),
     [LAYER_1] = LAYOUT_ansi_103(
     /*  knob(press)   󰔷           󰝣                         󱊷         F1        F2        F3        F4        F5        F6        F7        F8         F9       F10       F11          F12      DEL                  󰛨    */
         KC_MPLY,    DM_REC1,    _______,      KC_MSTP,     _______,  KC_BRID,  KC_BRIU,  KC_TASK,  _______,  RGB_M_P,  RGB_MOD,  KC_MPRV,  KC_MPLY,   KC_MNXT, KC_MUTE,  KC_VOLU,    KC_VOLD,  KC_BSPC,            RGB_TOG,
     /*  numlock       /           *             -            ~         1         2         3         4         5         6         7         8          9        0         -           =        <-                   pgup  */
-        _______,    RGB_SAD,    RGB_SAI,      RGB_HUI,     _______,  _______,  _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,    _______,  _______,            _______,
+        _______,    RGB_SAD,    RGB_SAI,      RGB_HUI,     _______,  _______,  _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,    _______,  KC_DEL,             _______,
     /*    7           8           9             +            󰌒         Q         W         E         R         T         Y         U         I          O        P         [           ]         \                   pgdn  */
         KC_MS_BTN1, KC_MS_U,    KC_MS_BTN2,   RGB_HUD,     KC_BSPC,  _______,  _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,    _______,  _______,            _______,
     /*    4           5           6                          caps      A         S         D         F         G         H         J         K          L        ;         '                     󰌑                   home  */
@@ -70,15 +75,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*    4           5           6                          caps      A         S         D         F         G         H         J         K          L        ;         '                     󰌑                   home  */
         KC_P4,      KC_P5,      KC_P6,               LCTL_T(KC_ESC), KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,      KC_L,    KC_SCLN,  KC_QUOT,              KC_ENT,             KC_HOME,
     /*    1           2           3                          lshift              Z         X         C         V         B         N         M          ,        .          /                    rshift       󰅃            */
-        KC_P1,      KC_P2,      KC_P3,        KC_PENT,     SC_LSPO,            KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,      KC_COMM, KC_DOT,   KC_SLSH,              SC_RSPC,     KC_UP,
+        KC_P1,      KC_P2,      KC_P3,        KC_PENT,   LSFT_T(KC_BSPC),      KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,      KC_COMM, KC_DOT,   KC_SLSH,            RSFT_T(KC_DEL),KC_UP,
     /*    0                       .                        lctrl     lgui      lalt                                    space                                   ralt         fn         rctrl        󰅁         󰅀         󰅂   */
-        KC_P0,                  KC_PDOT,                 KC_LCTL,  KC_LWIN,  LALT_T(KC_BSPC),                        KC_SPC,                                 KC_RALT,  MO(LAYER_1),  KC_RCTL,     KC_LEFT,  KC_DOWN,  KC_RGHT
+        KC_P0,                  KC_PDOT,                 KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  MO(LAYER_1),  KC_RCTL,     KC_LEFT,  KC_DOWN,  KC_RGHT
     ),
     [LAYER_3] = LAYOUT_ansi_103(
     /*  knob(press)   󰔷           󰝣                         󱊷         F1        F2        F3        F4        F5        F6        F7        F8         F9       F10       F11          F12      DEL                  󰛨    */
         KC_MPLY,    DM_REC1,    _______,      KC_MSTP,     _______,  KC_BRID,  KC_BRIU,  KC_TASK,  _______,  RGB_M_P,  RGB_MOD,  KC_MPRV,  KC_MPLY,   KC_MNXT, KC_MUTE,  KC_VOLU,    KC_VOLD,  KC_BSPC,            RGB_TOG,
     /*  numlock       /           *             -            ~         1         2         3         4         5         6         7         8          9        0         -           =        <-                   pgup  */
-        _______,    RGB_SAD,    RGB_SAI,      RGB_HUI,     _______,  _______,  _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,    _______,  _______,            _______,
+        _______,    RGB_SAD,    RGB_SAI,      RGB_HUI,     _______,  _______,  _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,    _______,  KC_DEL,             _______,
     /*    7           8           9             +            󰌒         Q         W         E         R         T         Y         U         I          O        P         [           ]         \                   pgdn  */
         KC_MS_BTN1, KC_MS_U,    KC_MS_BTN2,   RGB_HUD,     KC_BSPC,  _______,  _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,    _______,  _______,            _______,
     /*    4           5           6                          caps      A         S         D         F         G         H         J         K          L        ;         '                     󰌑                   home  */
@@ -102,17 +107,21 @@ void housekeeping_task_user(void) {
     housekeeping_task_keychron();
 }
 
+bool lshift_held = false;
+bool rshift_held = false;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_keychron(keycode, record)) {
         return false;
     }
+
     return true;
 }
 
 #define SET_WHITE(_index) rgb_matrix_set_color(_index, 255, 255, 255)
 #define SET_BLACK(_index) rgb_matrix_set_color(_index, 0, 0, 0)
 
-static bool caps_word_is_on = false;
+bool caps_word_is_on = false;
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     led_t led_state = host_keyboard_led_state();
     if (led_state.caps_lock) {
