@@ -63,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*    1           2           3                          lshift              Z         X         C         V         B         N         M          ,        .          /                    rshift       󰅃            */
         KC_MS_WH_UP,KC_MS_BTN3, KC_MS_WH_DOWN,_______,     _______,            _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,             _______,      KC_PAGE_UP,
     /*    0                       .                        lctrl     lgui      lalt                                    space                                   ralt         fn         rctrl        󰅁         󰅀         󰅂   */
-        _______,                _______,      _______,     _______,  _______,                                        CW_TOGG,                                _______,  _______,      _______,     KC_HOME,  KC_PAGE_DOWN,  KC_END
+        _______,                _______,                 _______,     _______,  _______,                             CW_TOGG,                                _______,  _______,      _______,     KC_HOME,  KC_PAGE_DOWN,  KC_END
     ),
     [LAYER_2] = LAYOUT_ansi_103(
     /*  knob(press)   󰔷           󰝣                         󱊷         F1        F2        F3        F4        F5        F6        F7        F8         F9       F10       F11          F12      DEL                  󰛨    */
@@ -91,15 +91,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*    1           2           3                          lshift              Z         X         C         V         B         N         M          ,        .          /                    rshift       󰅃            */
         KC_MS_WH_UP,KC_MS_BTN3, KC_MS_WH_DOWN,_______,     _______,            _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,             _______,      KC_PAGE_UP,
     /*    0                       .                        lctrl     lgui      lalt                                    space                                   ralt         fn         rctrl        󰅁         󰅀         󰅂   */
-        _______,                _______,      _______,     _______,  _______,                                        CW_TOGG,                                _______,  _______,      _______,     KC_HOME,  KC_PAGE_DOWN,  KC_END
+        _______,                _______,                   _______,  _______,  _______,                              CW_TOGG,                                _______,  _______,      _______,     KC_HOME,  KC_PAGE_DOWN,  KC_END
     ),
 };
 
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [LAYER_0] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
-    [LAYER_1] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
+    [LAYER_1] = {ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)},
     [LAYER_2] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
-    [LAYER_3] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)}
+    [LAYER_3] = {ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)}
 };
 // clang-format on
 
