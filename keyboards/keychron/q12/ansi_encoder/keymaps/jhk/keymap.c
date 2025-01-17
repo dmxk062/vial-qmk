@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "keycodes.h"
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
 
@@ -50,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*    1           2           3                          lshift              Z         X         C         V         B         N         M          ,        .          /                    rshift       󰅃            */
         KC_P1,      KC_P2,      KC_P3,        KC_PENT,   LSFT_T(KC_BSPC),      KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,      KC_COMM, KC_DOT,   KC_SLSH,            RSFT_T(KC_DEL),KC_UP,
     /*    0                       .                        lctrl     lgui      lalt                                    space                                   ralt         fn         rctrl        󰅁         󰅀         󰅂   */
-        KC_P0,                  KC_PDOT,                 KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  MO(LAYER_1),  KC_RCTL,     KC_LEFT,  KC_DOWN,  KC_RGHT
+        KC_P0,                  KC_PDOT,                 SC_LCPO,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  MO(LAYER_1),  SC_RCPC,     KC_LEFT,  KC_DOWN,  KC_RGHT
     ),
     [LAYER_1] = LAYOUT_ansi_103(
     /*  knob(press)   󰔷           󰝣                         󱊷         F1        F2        F3        F4        F5        F6        F7        F8         F9       F10       F11          F12      DEL                  󰛨    */
@@ -62,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*    4           5           6                          caps      A         S         D         F         G         H         J         K          L        ;         '                     󰌑                   home  */
         KC_MS_L,    KC_MS_D,    KC_MS_R,                   KC_CAPS,  _______,  _______,   _______, _______,  _______,  KC_LEFT,  KC_DOWN,  KC_UP  ,   KC_RIGHT, _______,  _______,              _______,            _______,
     /*    1           2           3                          lshift              Z         X         C         V         B         N         M          ,        .          /                    rshift       󰅃            */
-        KC_MS_WH_UP,KC_MS_BTN3, KC_MS_WH_DOWN,_______,     _______,            _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,             _______,      KC_PAGE_UP,
+        KC_MS_WH_UP,KC_MS_BTN3, KC_MS_WH_DOWN,_______,     _______,            _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, QK_REP ,  _______,             _______,      KC_PAGE_UP,
     /*    0                       .                        lctrl     lgui      lalt                                    space                                   ralt         fn         rctrl        󰅁         󰅀         󰅂   */
         _______,                _______,                 _______,     _______,  _______,                             CW_TOGG,                                _______,  _______,      _______,     KC_HOME,  KC_PAGE_DOWN,  KC_END
     ),
@@ -112,9 +113,6 @@ bool lshift_held = false;
 bool rshift_held = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_record_keychron(keycode, record)) {
-        return false;
-    }
 
     return true;
 }
