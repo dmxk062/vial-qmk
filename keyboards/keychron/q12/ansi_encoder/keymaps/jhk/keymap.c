@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*    1           2           3                          lshift              Z         X         C         V         B         N         M          ,        .          /                    rshift       󰅃            */
         KC_P1,      KC_P2,      KC_P3,        KC_PENT,   LSFT_T(KC_BSPC),      KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,      KC_COMM, KC_DOT,   KC_SLSH,            RSFT_T(KC_DEL),KC_UP,
     /*    0                       .                        lctrl     lgui      lalt                                    space                                   ralt         fn         rctrl        󰅁         󰅀         󰅂   */
-        KC_P0,                  KC_PDOT,                 SC_LCPO,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  MO(LAYER_1),  SC_RCPC,     KC_LEFT,  KC_DOWN,  KC_RGHT
+        KC_P0,                  KC_PDOT,                 SC_LCPO,  KC_LWIN,  LALT_T(KC_UNDERSCORE),                   KC_SPC,                                 KC_RALT,  MO(LAYER_1),  SC_RCPC,     KC_LEFT,  KC_DOWN,  KC_RGHT
     ),
     [LAYER_1] = LAYOUT_ansi_103(
     /*  knob(press)   󰔷           󰝣                         󱊷         F1        F2        F3        F4        F5        F6        F7        F8         F9       F10       F11          F12      DEL                  󰛨    */
