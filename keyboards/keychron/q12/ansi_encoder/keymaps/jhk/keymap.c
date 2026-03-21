@@ -17,23 +17,24 @@
 #include "keycodes.h"
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
+#include "quantum.h"
 
 #define LSHIFT_LED_INDEX 77
 #define RSHIFT_LED_INDEX 88
-#define SPACE_LED_INDEX  95
+#define SPACE_LED_INDEX 95
 #define ESCAPE_LED_INDEX 3
 
-enum layers{
-  LAYER_0,
-  LAYER_1,
-  /*
-   * Use the switch to switch between a programming focused and a more game focused mode
-   * in programming mode, theres more tapdances etc
-   * in gaming mode, there are none
-   * in game mode, the escape key is lit
-   */
-  LAYER_2,
-  LAYER_3
+enum layers {
+    LAYER_0,
+    LAYER_1,
+    /*
+     * Use the switch to switch between a programming focused and a more game focused mode
+     * in programming mode, theres more tapdances etc
+     * in gaming mode, there are none
+     * in game mode, the escape key is lit
+     */
+    LAYER_2,
+    LAYER_3
 };
 
 // clang-format off
@@ -51,19 +52,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*    1           2           3                          lshift              Z         X         C         V         B         N         M          ,        .          /                    rshift       󰅃            */
         KC_P1,      KC_P2,      KC_P3,        KC_PENT,   LSFT_T(KC_BSPC),      KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,      KC_COMM, KC_DOT,   KC_SLSH,            RSFT_T(KC_DEL),KC_UP,
     /*    0                       .                        lctrl     lgui      lalt                                    space                                   ralt         fn         rctrl        󰅁         󰅀         󰅂   */
-        KC_P0,                  KC_PDOT,                 SC_LCPO,  KC_LWIN,  LALT_T(KC_UNDERSCORE),                   KC_SPC,                                 KC_RALT,  MO(LAYER_1),  SC_RCPC,     KC_LEFT,  KC_DOWN,  KC_RGHT
+        KC_P0,                  KC_PDOT,                 SC_LCPO,  KC_LWIN,  LALT_T(KC_MINS),                         KC_SPC,                                 LT(LAYER_1, KC_RALT),  RGUI_T(KC_EQL),  SC_RCPC,     KC_LEFT,  KC_DOWN,  KC_RGHT
     ),
     [LAYER_1] = LAYOUT_ansi_103(
     /*  knob(press)   󰔷           󰝣                         󱊷         F1        F2        F3        F4        F5        F6        F7        F8         F9       F10       F11          F12      DEL                  󰛨    */
         KC_MPLY,    DM_REC1,    _______,      KC_MSTP,     _______,  KC_BRID,  KC_BRIU,  KC_TASK,  _______,  RGB_M_P,  RGB_MOD,  KC_MPRV,  KC_MPLY,   KC_MNXT, KC_MUTE,  KC_VOLU,    KC_VOLD,  KC_BSPC,            RGB_TOG,
     /*  numlock       /           *             -            ~         1         2         3         4         5         6         7         8          9        0         -           =        <-                   pgup  */
-        _______,    RGB_SAD,    RGB_SAI,      RGB_HUI,     _______,  _______,  _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,    _______,  KC_DEL,             _______,
+        _______,    RGB_SAD,    RGB_SAI,      RGB_HUI,     _______,  _______,  _______,  _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,    _______,  KC_DEL,             _______,
     /*    7           8           9             +            󰌒         Q         W         E         R         T         Y         U         I          O        P         [           ]         \                   pgdn  */
-        KC_MS_BTN1, KC_MS_U,    KC_MS_BTN2,   RGB_HUD,     KC_BSPC,  _______,  _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, _______,  _______,    _______,  _______,            _______,
+        KC_MS_BTN1, KC_MS_U,    KC_MS_BTN2,   RGB_HUD,     KC_BSPC,  DM_REC2,  DM_PLY2,   KC_END,  _______,  _______,  _______,  KC_MS_WH_UP, _______, _______, _______,  _______,    _______,  _______,            _______,
     /*    4           5           6                          caps      A         S         D         F         G         H         J         K          L        ;         '                     󰌑                   home  */
-        KC_MS_L,    KC_MS_D,    KC_MS_R,                   KC_CAPS,  _______,  _______,   _______, _______,  _______,  KC_LEFT,  KC_DOWN,  KC_UP  ,   KC_RIGHT, _______,  _______,              _______,            _______,
+        KC_MS_L,    KC_MS_D,    KC_MS_R,                   KC_CAPS,  KC_HOME,  _______,   KC_MS_WH_DOWN,KC_PGDN, _______,KC_LEFT,KC_DOWN,  KC_UP  ,   KC_RIGHT, _______,  _______,              _______,            _______,
     /*    1           2           3                          lshift              Z         X         C         V         B         N         M          ,        .          /                    rshift       󰅃            */
-        KC_MS_WH_UP,KC_MS_BTN3, KC_MS_WH_DOWN,_______,     _______,            _______,   _______, _______,  _______,  _______,  _______,  _______,   _______, QK_REP ,  _______,             _______,      KC_PAGE_UP,
+        KC_MS_WH_UP,KC_MS_BTN3, KC_MS_WH_DOWN,_______,     _______,            _______,   _______, _______,  _______,  KC_PGUP,  _______,  _______,   _______, QK_REP ,  _______,             _______,      KC_PAGE_UP,
     /*    0                       .                        lctrl     lgui      lalt                                    space                                   ralt         fn         rctrl        󰅁         󰅀         󰅂   */
         _______,                _______,                 _______,     _______,  _______,                             CW_TOGG,                                _______,  _______,      _______,     KC_HOME,  KC_PAGE_DOWN,  KC_END
     ),
@@ -112,19 +113,15 @@ void housekeeping_task_user(void) {
 bool lshift_held = false;
 bool rshift_held = false;
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-
-    return true;
-}
-
 #define SET_WHITE(_index) rgb_matrix_set_color(_index, 255, 255, 255)
 #define SET_BLACK(_index) rgb_matrix_set_color(_index, 0, 0, 0)
 
 static bool caps_word_is_on = false;
-static bool game_layer = false;
+static bool game_layer      = false;
+
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    led_t led_state = host_keyboard_led_state();
-    led_flags_t flags = rgb_matrix_get_flags();
+    led_t       led_state = host_keyboard_led_state();
+    led_flags_t flags     = rgb_matrix_get_flags();
     if (led_state.caps_lock) {
         SET_WHITE(LSHIFT_LED_INDEX);
         SET_WHITE(RSHIFT_LED_INDEX);
@@ -146,7 +143,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (caps_word_is_on) {
         SET_WHITE(SPACE_LED_INDEX);
         SET_WHITE(LSHIFT_LED_INDEX);
-       SET_WHITE(RSHIFT_LED_INDEX);
+        SET_WHITE(RSHIFT_LED_INDEX);
     } else {
         if (!flags) {
             SET_BLACK(SPACE_LED_INDEX);
@@ -163,7 +160,6 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             SET_BLACK(ESCAPE_LED_INDEX);
         }
     }
-
 
     return false;
 }
